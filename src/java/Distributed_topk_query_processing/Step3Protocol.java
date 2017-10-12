@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package distributed_approach;
 
 import java.io.IOException;
@@ -20,10 +16,6 @@ import peersim.core.Node;
 import peersim.edsim.EDProtocol;
 import peersim.transport.Transport;
 
-/**
- *
- * @author sakina
- */
 public class Step3Protocol implements EDProtocol{
     public Step3Protocol(String prefix){   
     }
@@ -38,7 +30,6 @@ public class Step3Protocol implements EDProtocol{
         MasterDataNode master = (MasterDataNode) Network.get(0);
         
         if (event instanceof Message4) {
-            //System.out.println("event = Message4");
             Message4 msg = (Message4) event;
             if(msg.getSender() != null) {
                 double begin = System.currentTimeMillis();
@@ -47,18 +38,13 @@ public class Step3Protocol implements EDProtocol{
                 Message5 reply = new Message5(result, node, (end-begin));
                 
                 ((Transport)node.getProtocol(FastConfig.getTransport(pid))).send(node, master, reply, pid);
-                System.out.println("----------------latency between "+ node.getIndex()+" and "+ master.getIndex()+ " is "+((Transport)node.getProtocol(FastConfig.getTransport(pid))).getLatency(node, master));
-                
-                System.out.println("Data sent from " + node.getIndex() + " to " + master.getIndex());
             }  
         
         }
         else{
             if (event instanceof Message5) {
-                //System.out.println("event = Message5");
                 if(!(node instanceof MasterDataNode)) return;
                 Message5 msg = (Message5) event;
-                System.out.println("le temps de calcul pour le noeud "+ msg.getSender().getIndex()+ " est "+ msg.getCalcul_time());
                 if (msg.getCalcul_time()>master.getMax_time()) {
                     master.setMax_time(msg.getCalcul_time());
                 }
@@ -66,18 +52,9 @@ public class Step3Protocol implements EDProtocol{
                 master.putStep3Result((Message5Value[])msg.getValue());
                 double end = System.currentTimeMillis();
                 master.setProcess_time(master.getProcess_time()+(end-begin));
-                if(master.getNbrResponses() == Network.size()) { // Everyone responded
-                    //master.printcandidateCollection();
-                    // Process data
-                    System.out.println("le temps maximal pris par le master est "+ master.getMax_time());
-                    System.out.println("le temps de la 3ere étape chez le serveur est "+(end-begin) );
+                if(master.getNbrResponses() == Network.size()) { 
                     System.out.println("Everyone responded! process data and start Step3 ");
-                    //Set topKCondidate = master.getKCondidateSet();
-                    
-                    
-                    
-                    //this.startStep2(master);
-                        SimulationController controller = (SimulationController)Configuration.getInstance(Configuration.getNames("control")[0]);
+                    SimulationController controller = (SimulationController)Configuration.getInstance(Configuration.getNames("control")[0]);
                         
                     try {
                         controller.startLastStep(master.getCandidatecollection(), master.getProcess_time()+master.getMax_time());
@@ -87,8 +64,7 @@ public class Step3Protocol implements EDProtocol{
                     }
                 }
             }
-            //System.out.println("event = Message5");
-        }
+      }
         
         
     }
