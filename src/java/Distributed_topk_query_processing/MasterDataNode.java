@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package distributed_approach;
 
 import java.io.IOException;
@@ -17,10 +13,6 @@ import java.util.Set;
 import java.util.Vector;
 import peersim.config.Configuration;
 
-/**
- *
- * @author sakina
- */
 public class MasterDataNode extends DataNode {
     private HashMap<String,Bounds> dataCollection;
     private HashMap<String,CryptedScore[]> candidatecollection; 
@@ -59,7 +51,6 @@ public class MasterDataNode extends DataNode {
     }
     
     public void dataCollectionReinitialzation(){
-        //dataCollection = new HashMap<>();
         nbrResponses = 0;
     }
     
@@ -73,21 +64,11 @@ public class MasterDataNode extends DataNode {
         
         for(int i = 0; i < data.length; i++) {
             if (this.dataCollection.containsKey(data[i].id)) {
-//                Bounds temp = this.dataCollection.get(data[i].id);
-//                int leng = temp.min_bound.length;
-//                int j = 0;
-//                while((temp.min_bound[j] != 0)&&(j<leng)){
-//                    j++;
-//                }
                 this.dataCollection.get(data[i].id).min_bound[node_index]=data[i].min_value;
                 
             }
             else{
                 Bounds  temp = new Bounds(nbr_node);
-//                for (int j = 0; j < temp.max_bound.length; j++) {
-//                    temp[j] = new Bounds(nbr_node);
-//                }
-                //System.out.println("-----------" + temp[0]);
                 temp.min_bound[node_index] = data[i].min_value;
                 this.dataCollection.put(data[i].id, temp);
             }
@@ -114,54 +95,6 @@ public class MasterDataNode extends DataNode {
                 
             }
             else{
-                //Bounds temp = this.dataCollection.get(next);
-//                boolean insert = true;
-//                int l = 0;
-//                int leng = this.dataCollection.get(next).max_bound.length;
-//                while (l<leng) {                    
-//                    if (this.dataCollection.get(next).min_bound[l]==((Message3Value)data.get(i)).min_bound) {
-//                        insert = false;
-//                        break;
-//                    }else{
-//                        l++;
-//                    }
-//                }
-//                if (insert == true) {
-//                    int j = 0;
-//                    while(j<leng){
-//                        if(this.dataCollection.get(next).min_bound[j] != 0){
-//                            j++;
-//                        }else{
-//                            break;
-//                        }
-//                    }
-//                    if (j<leng) {
-//                        this.dataCollection.get(next).min_bound[j] = ((Message3Value)data.get(i)).min_bound;
-//                    }
-//                }
-//                insert = true;
-//                l=0;
-//                while (l<leng) {                    
-//                    if (this.dataCollection.get(next).max_bound[l]==((Message3Value)data.get(i)).max_bound) {
-//                        insert = false;
-//                        break;
-//                    }else{
-//                        l++;
-//                    }
-//                }
-//                if (insert == true) {
-//                    int j = 0;
-//                    while (j<leng) {                        
-//                        if(this.dataCollection.get(next).max_bound[j] != 0){
-//                            j++;
-//                        }else{
-//                            break;
-//                        }
-//                    }
-//                    if (j<leng) {
-//                        this.dataCollection.get(next).max_bound[j] = ((Message3Value)data.get(i)).max_bound;
-//                    }
-//                }
 
                     if (this.dataCollection.get(next).min_bound[node_index] == 0) {
                         this.dataCollection.get(next).min_bound[node_index] = ((Message3Value)data.get(i)).min_bound;
@@ -176,14 +109,7 @@ public class MasterDataNode extends DataNode {
             }   
             i++;
         }
-//         System.out.println();
-//        Iterator it2= this.dataCollection.keySet().iterator();
-//        while(it2.hasNext()) {            
-//            String next =it2.next().toString();
-//            System.out.println("id = "+ next + " minscores = "+ Arrays.toString(this.dataCollection.get(next).min_bound) );
-//            System.out.println("          maxscores = "+ Arrays.toString(this.dataCollection.get(next).max_bound) );
-//        }
-        
+       
         this.nbrResponses++;
     }
     
@@ -196,8 +122,8 @@ public class MasterDataNode extends DataNode {
         Set keys = this.dataCollection.keySet();
                 Iterator it = keys.iterator();
                 while (it.hasNext()){
-                    String key = (String) it.next(); // tu peux typer plus finement ici
-                    Bounds value = this.dataCollection.get(key); // tu peux typer plus finement ici
+                    String key = (String) it.next(); 
+                    Bounds value = this.dataCollection.get(key); 
                     System.out.print("the data item is "+key + "   ");
                     for (int i = 0; i < this.dataCollection.get(key).max_bound.length; i++) {
                         System.out.print(" min bound "+ this.dataCollection.get(key).min_bound[i]+"  max bound " 
@@ -221,7 +147,6 @@ public class MasterDataNode extends DataNode {
                 while (it.hasNext()){
                     String key = (String) it.next(); 
                     global_score = computeOverallScore(this.dataCollection.get(key).min_bound); 
-                    //System.out.println("overall score of " + key + " = " + global_score);
                     if (global_score > min_glb_scr){
                         k_high_scores[minIndex] = global_score;
                         min=k_high_scores[0];
@@ -236,14 +161,13 @@ public class MasterDataNode extends DataNode {
                     }
                     
                 }
-                //if (this.nbrResponses == nbr_node) {
-            dataCollectionReinitialzation();
-        //}
+                dataCollectionReinitialzation();
+       
         this.TH=min_glb_scr/nbr_node;
         System.out.println("TH =  " +this.TH);
             return this.TH;
     }
-    // for the random database
+   
     private double computeOverallScore (double [] localScores){
     
         double overallScore =0;
@@ -253,23 +177,9 @@ public class MasterDataNode extends DataNode {
         return overallScore;    
 
     }
-    // for the real database
-//    private double computeOverallScore (double [] localScores){
-//        System.out.println("//////////////localScores[0] = "+localScores[0]+"localScores[1] = "+localScores[1]+"localScores[2] = "+localScores[2]
-//        +"localScores[3] = "+localScores[0]*3600+"localScores[4] = "+localScores[4]*60);
-//        double overallScore =0;
-//        overallScore = localScores[0] + localScores[1] + localScores[2] + localScores[3]*3600 + localScores[4]*60 ;//+ localScores[5];
-////        for (int k=0; k<localScores.length; ++k)
-////            overallScore = overallScore + localScores[k];
-//
-//        return overallScore;    
-//
-//    }
-    
+   
     public Set getKCondidateSet() throws UnsupportedEncodingException, IOException{
-        //String key_string="huyfhksdlkopijuhygtfreazdfdgoizeuydfuyifkiudf";
-        //byte[] key_xor=key_string.getBytes();
-        int k = Configuration.getInt("K");
+       int k = Configuration.getInt("K");
         double [] k_high_scores = new double [k];
         double global_score;
         double min_glb_scr=0;
@@ -280,7 +190,6 @@ public class MasterDataNode extends DataNode {
                 while (it1.hasNext()){
                     String key = (String) it1.next(); 
                     global_score = computeOverallScore(this.dataCollection.get(key).min_bound);
-                    //System.out.println("overall score of " + key + " = " + global_score);
                     if (global_score > min_glb_scr){
                         k_high_scores[minIndex] = global_score;
                         min=k_high_scores[0];
@@ -311,13 +220,11 @@ public class MasterDataNode extends DataNode {
                             maxOverallScore = maxOverallScore + this.dataCollection.get(key).max_bound[h];
                         }}
                         if (maxOverallScore < th2){
-                            //System.out.println("removed data "+key+" has overall score ="+maxOverallScore);
-                        this.dataCollection.remove(key);
+                           this.dataCollection.remove(key);
                     }
                 }  
                 keys = this.dataCollection.keySet();
                 System.out.println("number of data items after filtering "+this.dataCollection.size());
-                //this.dataCollection = new HashMap<>();
                 dataCollectionReinitialzation();
             return keys;
     }
@@ -345,7 +252,6 @@ public class MasterDataNode extends DataNode {
                 while(j<leng){
                     if(k[j] != null){
                         j++;
-                        //System.err.println("j= "+j);
                     }else{
                         break;
                     }
@@ -364,22 +270,16 @@ public class MasterDataNode extends DataNode {
         }
         
         this.nbrResponses++;
-        
-        
-        
-    
-    
     }
     
     public void printcandidateCollection(){
         Set keys = this.candidatecollection.keySet();
                 Iterator it = keys.iterator();
                 while (it.hasNext()){
-                    String key = (String) it.next(); // tu peux typer plus finement ici
-                    CryptedScore[] value = this.candidatecollection.get(key); // tu peux typer plus finement ici
+                    String key = (String) it.next(); 
+                    CryptedScore[] value = this.candidatecollection.get(key); 
                     System.out.print("the data item is "+key + "  its scores are ");
                     for (int i = 0; i < this.candidatecollection.get(key).length; i++) {
-                        //System.out.println("ÈÈÈÈÈÈÈ"+ this.candidatecollection.get(key)[i].score);
                         System.out.print(  Arrays.toString(this.candidatecollection.get(key)[i].score));
                     }
                     System.out.println();
