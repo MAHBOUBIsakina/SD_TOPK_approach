@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package distributed_approach;
 
 import java.util.ArrayList;
 import peersim.core.Node;
 
-/**
- *
- * @author sakina
- */
 public class Message3 {
     final ArrayList value;
     
@@ -40,7 +32,7 @@ public class Message3 {
     
     
     public void printMessage3(){
-        System.out.println("Message 2 contains ");
+        System.out.println("Message 3 contains ");
         for (int i = 0; i < this.value.size(); i++) {
             System.out.println("id = "+ ((Message3Value)value.get(i)).id + " min bound = "+((Message3Value)value.get(i)).min_bound + " max bound = " + ((Message3Value)value.get(i)).max_bound);
         }
