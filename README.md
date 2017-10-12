@@ -1,6 +1,6 @@
 # SD_TOPK_approach
 
-  \t The cloud allows users and companies to efficiently store and process their data in third-party data centers. However, users typically loose physical access control to their data. Thus, potentially sensitive data gets at risk of security attacks, e.g., from employees of the cloud provider. According to a recent report published by the Cloud Security Alliance, security attacks are one of the main concerns for cloud users.
+   &emsp; The cloud allows users and companies to efficiently store and process their data in third-party data centers. However, users typically loose physical access control to their data. Thus, potentially sensitive data gets at risk of security attacks, e.g., from employees of the cloud provider. According to a recent report published by the Cloud Security Alliance, security attacks are one of the main concerns for cloud users.
 
   \t One solution for protecting user data is to encrypt the data before sending to the cloud nodes. Then, the challenge is to answer user queries over the encrypted data. A naive solution for answering queries is to retrieve the encrypted database from the cloud to the client, decrypt it, and then evaluate the query over plaintext (non encrypted) data. This solution is not practical, because it does not allow us to take advantage of the cloud computing power for evaluating queries.
 
