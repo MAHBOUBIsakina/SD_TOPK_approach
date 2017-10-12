@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package distributed_approach;
 
 import java.io.BufferedReader;
@@ -26,17 +22,13 @@ import static peersim.core.Node.PAR_PROT;
 import peersim.core.Protocol;
 import peersim.core.Fallible;
 
-/**
- *
- * @author sakina
- */
+
 public class DataNode implements Node{
     static private int pointer = 0;
     static private int nMasters = 0;
     
     static public int NBR_MASTERS;
     
-    //public List_EncryptedItems[] data;
     
     public LinkedHashMap<String,EncryptedItem> datalist;
     
@@ -98,74 +90,8 @@ public class DataNode implements Node{
                 CommonState.setPid(i);
                 result.protocol[i] = (Protocol)protocol[i].clone();
         }
-        //try {
-            // TODO get the data;
-           // result.data = this.initializeData();
-            
-        //} catch (IOException ex) {
-        //    Logger.getLogger(DataNode.class.getName()).log(Level.SEVERE, null, ex);
-        //}
+        
         return result;
-    }
-    
-    private List_EncryptedItems[] initializeData() throws IOException {
-        int nbr = Configuration.getInt("NBR_ELEMENTS");
-        
-        List_EncryptedItems[] data = new List_EncryptedItems[nbr];
-        
-        InputStream flux = new FileInputStream ("/home/sakina/Desktop/crypted_DB.txt"); 
-        InputStreamReader lecture=new InputStreamReader(flux);
-        BufferedReader buff=new BufferedReader(lecture); 
-        String value;
-        String []line;
-        String [] crypted_score;
-        int current_line = 0;
-        while(current_line < pointer){
-            buff.readLine();
-            current_line++;
-        }
-        for(int i = 0; i < nbr; i++) {
-            value=buff.readLine();
-            //System.out.println(" value = " + value);
-            line = value.split("/");
-            //System.out.println(" line = " + line[1]);
-            data[i] = new List_EncryptedItems();
-            
-            data[i].dataID = line[0];
-            
-            crypted_score = line[1].split(" ");
-            
-            //System.out.println("crypted score "+ crypted_score[0]);
-            data[i].score = new byte[crypted_score.length];
-                
-            for (int j = 0; j < crypted_score.length; j++) {
-                data[i].score[j] =(byte) Integer.parseInt(crypted_score[j]) ;
-            }
-            
-            data[i].min_bound = Double.parseDouble(line[2]);
-            
-            data[i].max_bound = Double.parseDouble(line[3]);
-            
-            String score="";
-                for (int l = 0; l < data[i].score.length; l++) {
-                    score = score + data[i].score[l] + " ";
-                   // h++;
-                    //System.out.println(fp.db1.listsCR[j].elementsCR[i].score[l]);
-                }
-            
-            System.out.println(data[i].dataID + "/" + score + "/" + data[i].min_bound + " / " + data[i].max_bound);
-            
-        }
-        
-       
-           
-        
-         buff.close();
-        
-        // update pointer
-        pointer += nbr;
-        
-        return data;
     }
     
     
@@ -174,24 +100,13 @@ public class DataNode implements Node{
         
         
         for(int i = 0; i < list.length; i++) {
-            //temp.dataID = list[i].dataID;
             EncryptedItem temp = new EncryptedItem();
             temp.min_bound = list[i].min_bound;
             temp.max_bound = list[i].max_bound;
             temp.score = new byte[list[i].score.length];
             System.arraycopy(list[i].score, 0, temp.score, 0, list[i].score.length);
-            //System.out.println("temp.id = "+ list[i].dataID + " temp.minscore = "+ temp.min_bound );
             this.datalist.put(list[i].dataID, temp);
-            //System.out.println("temp.id = "+ list[i].dataID + " temp.minscore = "+ this.datalist.get(list[i].dataID).min_bound);
-            
-        }
-//        System.out.println();
-//        Iterator it = this.datalist.keySet().iterator();
-//        while(it.hasNext()) {            
-//            String next =it.next().toString();
-//            System.out.println("id = "+ next + " minscore = "+ this.datalist.get(next).min_bound );
-//        }
-        
+            }      
     }
     
     public Message2Value[] getKElements() {
@@ -227,23 +142,13 @@ public class DataNode implements Node{
             i++;
         }
         
-        
-        
-        
-        // calculate a number close to k
-       
-        
         return items_to_return;
     }
     
     
     public ArrayList getDataHighThanTH(double th){
-        //int bucket_size = Configuration.getInt("BUCKET_SIZE");
-        
-        //int nb_element_per_node = Configuration.getInt("NBR_ELEMENTS");
         ArrayList items_to_return = new ArrayList();
         
-        //int i = 0;
         int k = 0;
         Message3Value temp=null;
         Iterator it = datalist.keySet().iterator();
@@ -257,39 +162,19 @@ public class DataNode implements Node{
             k++;
             next = (String) it.next();
         }
-        System.out.println("#########################the last min ="+temp.min_bound+" stop position =  "+k);
-//        int nb_items_to_return = k*bucket_size;
-//        
-//        Message3Value []items_to_return = new Message3Value[nb_items_to_return];
-//        //System.out.println("getDataHighThanTH methode  i= "+ i + " nb_items_to_return= "+ nb_items_to_return + " th = "+ th);
-//        
-//        for (i = 0; i < nb_items_to_return; i++) {
-//            
-//            items_to_return[i] = new Message3Value();
-//            items_to_return[i].id = this.data[i].dataID;
-//            items_to_return[i].min_bound = this.data[i].min_bound;
-//            items_to_return[i].max_bound = this.data[i].max_bound;
-//            //System.out.println("****************"+items_to_return[i].id + "   " + items_to_return[i].min_bound +
-//                    //"   " + items_to_return[i].max_bound);
-//        }
         
         return items_to_return;
         
     }
     
     public Message5Value []getTop_kCondidateScores (Set candidate){
-        //System.out.println("------------------------------start get top k condidate methode  ");
-        //Set topk_candidate = candidate;
         Message5Value [] result = new Message5Value[candidate.size()];
         Iterator it = candidate.iterator();
         int l=0;
         while (it.hasNext()) {
             
             String next = (String) it.next();
-            //System.out.println("data item "+ next +" is sdfffffffffff");
-            //System.out.println("data item "+ next +" is ");
-            //for (int i = 0; i < data.length; i++) {
-                if (datalist.get(next) != null) {
+               if (datalist.get(next) != null) {
                     result[l] = new Message5Value();
                     result[l].dataID = next;
                     int leng = datalist.get(next).score.length;
@@ -298,15 +183,11 @@ public class DataNode implements Node{
                     for (int j = 0; j < leng; j++) {
                         result[l].score[j] = datalist.get(next).score[j];
                     }
-                    //break;
-                }else{
+              }else{
                     System.out.println(" the data item doesn'i eist in the list");
                 }
-            //}
-            //System.out.println("data item "+ next +" is sdfffffffffff");
             l++;
         }
-        //System.out.println("------------------------------finish get top k condidate methode ");
         return result;
     }
     
@@ -340,12 +221,6 @@ public class DataNode implements Node{
     * (i.e. they are not random).
     */
     public long getID() { return ID; }
-   
-    
-    
-    
-   
-
    
     
     public String toString() 
