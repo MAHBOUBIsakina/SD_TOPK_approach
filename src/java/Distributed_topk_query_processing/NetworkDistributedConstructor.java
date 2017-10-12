@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package distributed_approach;
 
 import peersim.config.Configuration;
@@ -16,20 +12,12 @@ import peersim.edsim.EDSimulator;
 import peersim.edsim.PriorityQ.Event;
 import peersim.graph.Graph;
 
-/**
- *
- * @author sakina
- */
 public class NetworkDistributedConstructor implements Control{
     
     private static final String PAR_PROT = "protocol";
     
     
     protected final int protid;
-    
-    //protected final int pTalkingID;
-    
-    //protected final int cdprotID;
     
     public Graph g=null;
     
