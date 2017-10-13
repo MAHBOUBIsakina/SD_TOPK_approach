@@ -27,7 +27,7 @@
 
 &emsp; In the Configuration.txt file, you can modify the parameter values:
 <ul>
-  <li> Network size: SIZE</li>
+  <li> Network size or list number: SIZE</li>
   <li> Number of data items per node: NBR_ELEMENTS </li>
   <li> Number of elements in each bucket: BUCKET_SIZE </li>
   <li> Number of queried elements: K </li>
