@@ -14,3 +14,21 @@
 
 &emsp;  We evaluated the performance of our solution over synthetic and real databases. The results show excellent response time and communication cost for the SD-TOPK compared to TA-based approaches. They also show the efficiency of our filtering algorithm that eliminates almost all false positives in the cloud, and reduces the communication cost between the cloud and the client. To the best of our Knowledge, SD-TOPK is the first efficient solution able to evaluate top-k queries over encrypted data in distributed environments.
 
+# Implementation 
+
+&emps; We have implemented our solution using JAVA with PEERSIM simulator whiwh allow as to simulate the distributed environement. PEERSIM is written in JAVA. to use it, we had download it from <a /href:https://sourceforge.net/projects/peersim/files/latest/download> <a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
