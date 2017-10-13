@@ -16,7 +16,7 @@
 
 # Implementation 
 
-&emps; We have implemented our solution using JAVA with PEERSIM simulator whiwh allow as to simulate the distributed environement. PEERSIM is written in JAVA. to use it, we had download it from <a /href:https://sourceforge.net/projects/peersim/files/latest/download> <a>
+&emps; We have implemented our solution using JAVA with PEERSIM simulator whiwh allow as to simulate the distributed environement. PEERSIM is written in JAVA. to use it, we had download it from https://sourceforge.net/projects/peersim/files/latest/download
 
 
 
